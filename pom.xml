@@ -55,6 +55,35 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+		<!-- thymeleaf-layout-dialect 页面模板 -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+				<!-- 分页控件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.13</version>
+		</dependency>
+				<!-- 阿里数据源druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+
+		<!-- 热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -78,6 +107,57 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+				<version>1.7.6</version>
+				<executions>
+					<execution>
+						<id>default-minify</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<charset>UTF-8</charset>
+							<webappSourceDir>${basedir}/src/main/resources/static</webappSourceDir>
+
+							<!-- js配置 -->
+							<jsSourceDir>/</jsSourceDir>
+							<jsSourceIncludes>
+								<jsSourceInclude>js/**/*.js</jsSourceInclude>
+								<jsSourceInclude>kingim/**/*.js</jsSourceInclude>
+								<jsSourceInclude>tuiCalendar/**/*.js</jsSourceInclude>
+							</jsSourceIncludes>
+							<!-- 不压缩的js文件 -->
+							<jsSourceExcludes>
+								<jsSourceExclude>**/*.min.js</jsSourceExclude>
+								<jsSourceExclude>**/*.all.js</jsSourceExclude>
+								<jsSourceExclude>**/*-min.js</jsSourceExclude>
+								<jsSourceExclude>**/jquery.mb.YTPlayer.js</jsSourceExclude>
+							</jsSourceExcludes>
+
+							<!-- css配置 -->
+							<cssSourceDir>/</cssSourceDir>
+							<cssSourceIncludes>
+								<cssSourceInclude>css/login.css</cssSourceInclude>
+							</cssSourceIncludes>
+
+							<!-- 不压缩的css文件 -->
+							<cssSourceExcludes>
+								<cssSourceExclude>**/*.min.cssjs</cssSourceExclude>
+								<cssSourceExclude>**/*-min.css</cssSourceExclude>
+							</cssSourceExcludes>
+
+							<webappTargetDir>${project.build.outputDirectory}/static</webappTargetDir>
+							<jsEngine>CLOSURE</jsEngine>
+							<skipMerge>true</skipMerge>
+							<nosuffix>true</nosuffix>
+							<verbose>true</verbose>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
